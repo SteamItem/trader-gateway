@@ -6,7 +6,7 @@ admin:
 apiEndpoints:
   # see: http://www.express-gateway.io/docs/configuration/gateway.config.yml/apiEndpoints
   api:
-    host: ${HOST}
+    host: '*'
     paths: ['/bot', '/bot/*', '/pricEmpire/*', '/rollbit', '/wishlistItems', '/wishlistItems/*']
 serviceEndpoints:
   # see: http://www.express-gateway.io/docs/configuration/gateway.config.yml/serviceEndpoints
@@ -17,12 +17,7 @@ serviceEndpoints:
   puppetService:
     url: ${PUPPET_API}
 policies:
-  - basic-auth
-  - cors
-  - expression
-  - key-auth
-  - log
-  - oauth2
+  - jwt
   - proxy
   - rate-limit
 pipelines:
@@ -33,27 +28,11 @@ pipelines:
     policies:
     # Uncomment `key-auth:` when instructed to in the Getting Started guide.
     # - key-auth:
+      - jwt:
+        - action:
+            secretOrPublicKeyFile: ./key/pubKey.pem
+            checkCredentialExistence: false
       - proxy:
           - action:
               serviceEndpoint: apiService
-              changeOrigin: true
-  botPipeline:
-    apiEndpoints:
-      - bot
-    policies:
-    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
-    # - key-auth:
-      - proxy:
-          - action:
-              serviceEndpoint: botService
-              changeOrigin: true
-  puppetPipeline:
-    apiEndpoints:
-      - puppet
-    policies:
-    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
-    # - key-auth:
-      - proxy:
-          - action:
-              serviceEndpoint: puppetService
               changeOrigin: true
