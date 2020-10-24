@@ -1,27 +1,21 @@
 http:
-  port: 80
+  port: ${PORT}
 admin:
   port: 9876
   host: localhost
 apiEndpoints:
   # see: http://www.express-gateway.io/docs/configuration/gateway.config.yml/apiEndpoints
   api:
-    host: localhost
-    paths: ['/api','/api/*']
-  bot:
-    host: localhost
-    paths: ['/bot','/bot/*']
-  puppet:
-    host: localhost
-    paths: ['/puppet','/puppet/*']
+    host: ${HOST}
+    paths: ['/bot', '/bot/*', '/pricEmpire/*', '/rollbit', '/wishlistItems', '/wishlistItems/*']
 serviceEndpoints:
   # see: http://www.express-gateway.io/docs/configuration/gateway.config.yml/serviceEndpoints
   apiService:
-    url: 'http://localhost:3003'
+    url: ${WEB_API}
   botService:
-    url: 'http://localhost:3002'
+    url: ${BOT_API}
   puppetService:
-    url: 'http://localhost:3001'
+    url: ${PUPPET_API}
 policies:
   - basic-auth
   - cors
