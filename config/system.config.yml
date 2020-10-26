@@ -4,9 +4,13 @@ db:
     emulate: true
     namespace: EG
 
-# plugins:
+plugins:
   # express-gateway-plugin-example:
-  #   param1: 'param from system.config' 
+  #   param1: 'param from system.config'
+  moesif:
+    applicationId: eyJhcHAiOiIzOTE6MTcyIiwidmVyIjoiMi4wIiwib3JnIjoiODg6NzExIiwiaWF0IjoxNjAxNTEwNDAwfQ.ch5F3aJls2YKGzKrE4yefe7G_oOFuc3lxnQQy5u19eY
+  auth0:
+    package: express-gateway-plugin-auth0
 
 crypto:
   cipherKey: sensitiveKey

@@ -6,6 +6,8 @@
   "version": "1.0.0",
   "main": "server.js",
   "dependencies": {
-    "express-gateway": "^1.16.10"
+    "express-gateway": "^1.16.10",
+    "express-gateway-plugin-auth0": "^1.0.1",
+    "express-gateway-plugin-moesif": "^1.0.1"
   }
 }

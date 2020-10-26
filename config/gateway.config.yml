@@ -4,12 +4,16 @@ admin:
   port: 9876
   host: localhost
 apiEndpoints:
-  # see: http://www.express-gateway.io/docs/configuration/gateway.config.yml/apiEndpoints
   api:
     host: '*'
-    paths: ['/bot', '/bot/*', '/pricEmpire/*', '/rollbit', '/wishlistItems', '/wishlistItems/*']
+    paths:
+      - '/bot'
+      - '/bot/*'
+      - '/pricEmpire/*'
+      - '/rollbit'
+      - '/wishlistItems'
+      - '/wishlistItems/*'
 serviceEndpoints:
-  # see: http://www.express-gateway.io/docs/configuration/gateway.config.yml/serviceEndpoints
   apiService:
     url: ${WEB_API}
   botService:
@@ -17,19 +21,24 @@ serviceEndpoints:
   puppetService:
     url: ${PUPPET_API}
 policies:
-  - jwt
   - proxy
-  - rate-limit
+  - moesif
+  - auth0
+  - request-transformer
 pipelines:
-  # see: https://www.express-gateway.io/docs/configuration/gateway.config.yml/pipelines
   apiPipeline:
     apiEndpoints:
       - api
     policies:
-      - jwt:
-        - action:
-            secretOrPublicKeyFile: ./key/pubKey.pem
-            checkCredentialExistence: false
+      - moesif:
+      - auth0:
+          - action:
+              domain: 'https://suphero.eu.auth0.com'
+      - request-transformer:
+          - action:
+              body:
+                add:
+                  user: req.user
       - proxy:
           - action:
               serviceEndpoint: apiService
