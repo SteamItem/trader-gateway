@@ -36,7 +36,7 @@ pipelines:
               domain: 'https://suphero.eu.auth0.com'
       - request-transformer:
           - action:
-              body:
+              headers:
                 add:
                   user: req.user
       - proxy:
